@@ -1,4 +1,4 @@
-name: BACKEND CI/CD
+name: Backend CI/CD
 
 on:
   push:
@@ -6,42 +6,40 @@ on:
       - main
 
 jobs:
-  build-and-deploy-backend:
+  build-and-deploy-frontend:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
 
+    
       - name: Set up Node.js
         uses: actions/setup-node@v2
         with:
           node-version: '14'  # Adjust as needed
 
-      - name: Login to Docker Hub
-        run: echo ${{ secrets.DOCKERHUB_TOKEN }} | docker login -u abbeylink --password-stdin
-        
-
       - name: Build and push Docker image to Docker Hub
         env:
-          DOCKER_USERNAME: ${{ secrets.DOCKERHUB_TOKEN }}
-          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
-          IMAGE_NAME: abbeylink/devops-backend:1.0
+          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+          DOCKER_PASSWORD: ${{ secrets.DOCKERHUB_TOKEN }}
+          IMAGE_NAME: abbeylink/backend:1.0
         run: |
           docker build -t $IMAGE_NAME .
-         
+          docker login -u $DOCKER_USERNAME -p $DOCKERHUB_TOKEN
           docker push $IMAGE_NAME
 
-      - name: Configure AWS credentials
-        run: aws configure set aws_access_key_id ${{ secrets.AWS_ACCESS_KEY_ID }} && aws configure set aws_secret_access_key ${{ secrets.AWS_SECRET_ACCESS_KEY }} && aws configure set region eu-north-1
-        
+      - name: Generate deployment package
+        run: zip -r deploy.zip . -x '*.git*'
 
-      - name: Create Task Definition
-        run: |
-            aws ecs register-task-definition --cli-input-json /aws/task-definition/devops-backend-revision.json
-  
-      - name: Update ECS Service
-        run: |
-            aws ecs update-service --service backend-service --cluster backend --task-definition devops-backend
-
-    
+      - name: Deploy to Elastic Beanstalk
+        uses: einaregilsson/beanstalk-deploy@v14
+        with:
+         aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
+         aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+         application_name: backend
+         environment_name: Backend-env
+         version_label: "v${{ github.run_number }}"
+         region: eu-north-1
+          # Use the image from the registry or directly if not using a registry
+         deployment_package: deploy.zip
