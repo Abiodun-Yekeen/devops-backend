@@ -44,14 +44,4 @@ jobs:
         run: |
             aws ecs update-service --service backend-service --cluster backend --task-definition devops-backend
 
-      # - name: Deploy to Elastic Beanstalk    devops-backend-revision.json
-      #   uses: einaregilsson/beanstalk-deploy@v14
-      #   with:
-      #    aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
-      #    aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-      #    application_name: backend
-      #    environment_name: Backend-env
-      #    version_label: "v${{ github.run_number }}"
-      #    region: eu-north-1
-      #     # Use the image from the registry or directly if not using a registry
-      #    deployment_package: abbeylink/devops-backend:1.0
+    
