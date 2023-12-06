@@ -18,14 +18,18 @@ jobs:
         with:
           node-version: '14'  # Adjust as needed
 
+      - name: Login to Docker Hub
+        run: echo ${{ secrets.DOCKERHUB_TOKEN }} | docker login -u abbeylink --password-stdin
+        
+
       - name: Build and push Docker image to Docker Hub
         env:
-          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+          DOCKER_USERNAME: ${{ secrets.DOCKERHUB_TOKEN }}
           DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
           IMAGE_NAME: abbeylink/backend-prod:1.0
         run: |
           docker build -t $IMAGE_NAME .
-          docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
+         
           docker push $IMAGE_NAME
 
       - name: Deploy to Elastic Beanstalk
