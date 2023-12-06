@@ -26,7 +26,7 @@ jobs:
         env:
           DOCKER_USERNAME: ${{ secrets.DOCKERHUB_TOKEN }}
           DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
-          IMAGE_NAME: abbeylink/backend-prod:1.0
+          IMAGE_NAME: abbeylink/devops-backend:1.0
         run: |
           docker build -t $IMAGE_NAME .
          
@@ -42,4 +42,4 @@ jobs:
          version_label: "v${{ github.run_number }}"
          region: eu-north-1
           # Use the image from the registry or directly if not using a registry
-         deployment_package: abbeylink/backend-prod:1.0
+         deployment_package: abbeylink/devops-backend:1.0
