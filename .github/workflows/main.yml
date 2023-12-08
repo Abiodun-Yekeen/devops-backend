@@ -1,49 +1,49 @@
-name: Backend CI/CD
+# name: Backend CI/CD
 
-on:
-  push:
-    branches:
-      - main
+# on:
+#   push:
+#     branches:
+#       - main
 
-jobs:
-  build-and-deploy-frontend:
-    runs-on: ubuntu-latest
+# jobs:
+#   build-and-deploy-frontend:
+#     runs-on: ubuntu-latest
 
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
+#     steps:
+#       - name: Checkout repository
+#         uses: actions/checkout@v2
 
     
-      - name: Set up Node.js
-        uses: actions/setup-node@v2
-        with:
-          node-version: '14'  # Adjust as needed
+#       - name: Set up Node.js
+#         uses: actions/setup-node@v2
+#         with:
+#           node-version: '14'  # Adjust as needed
 
-      - name: Login to Docker Hub
-        run: echo ${{ secrets.DOCKERHUB_TOKEN }} | docker login -u abbeylink --password-stdin
+#       - name: Login to Docker Hub
+#         run: echo ${{ secrets.DOCKERHUB_TOKEN }} | docker login -u abbeylink --password-stdin
         
 
-      - name: Build and push Docker image to Docker Hub
-        env:
-          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
-          DOCKER_PASSWORD: ${{ secrets.DOCKERHUB_TOKEN }}
-          IMAGE_NAME: abbeylink/backend:1.0
-        run: |
-          docker build -t $IMAGE_NAME .
+#       - name: Build and push Docker image to Docker Hub
+#         env:
+#           DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+#           DOCKER_PASSWORD: ${{ secrets.DOCKERHUB_TOKEN }}
+#           IMAGE_NAME: abbeylink/backend:1.0
+#         run: |
+#           docker build -t $IMAGE_NAME .
           
-          docker push $IMAGE_NAME
+#           docker push $IMAGE_NAME
 
-      - name: Generate deployment package
-        run: zip -r deploy.zip . -x '*.git*'
+#       - name: Generate deployment package
+#         run: zip -r deploy.zip . -x '*.git*'
 
-      - name: Deploy to Elastic Beanstalk
-        uses: einaregilsson/beanstalk-deploy@v14
-        with:
-         aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
-         aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-         application_name: api
-         environment_name: Api-env-1
-         version_label: "v${{ github.run_number }}"
-         region: eu-north-1
-          # Use the image from the registry or directly if not using a registry
-         deployment_package: deploy.zip
+#       - name: Deploy to Elastic Beanstalk
+#         uses: einaregilsson/beanstalk-deploy@v14
+#         with:
+#          aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
+#          aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+#          application_name: api
+#          environment_name: Api-env-1
+#          version_label: "v${{ github.run_number }}"
+#          region: eu-north-1
+#           # Use the image from the registry or directly if not using a registry
+#          deployment_package: deploy.zip
