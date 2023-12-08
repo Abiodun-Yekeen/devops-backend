@@ -1,0 +1,21 @@
+# name: CD Pipeline
+
+# on:
+#     workflow_run:
+#       workflows: ["CI Pipeline"]
+#       types:
+#         - completed
+
+
+# jobs:
+#     build:
+#         runs-on: self-hosted
+#         steps:
+#         - name: Pull Docer Image
+#           run: docker pull ${{ secrets.DOCKER_USERNAME }}/client:${{github.sha}}
+#         - name: Delete old docker container
+#           run: docker rm -f client || true
+#         - name: Run Docker Container
+#           run: docker run -d --name api -p 80:80 client:${{github.sha}}
+
+      
