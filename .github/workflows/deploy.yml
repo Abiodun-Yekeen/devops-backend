@@ -41,7 +41,7 @@ jobs:
           script: |
             docker stop api || true
             docker rm api || true
-            docker pull ${{ secrets.DOCKER_USERNAME }}/api:${{github.sha}}
+            docker pull ${{ secrets.DOCKER_USERNAME }}/api:${{github.run_number}}
             docker run -d --name api -p 8085:8085 ${{ secrets.DOCKER_USERNAME }}/api:${{github.run_number}}
 
 
