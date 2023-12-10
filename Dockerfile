@@ -23,7 +23,7 @@
 FROM node:latest
 
 # Set the working directory in the container
-WORKDIR /usr/src/backend 
+WORKDIR /app
 
 # Copy package.json and package-lock.json to the working directory
 COPY package*.json ./
