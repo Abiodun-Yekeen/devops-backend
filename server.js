@@ -20,10 +20,10 @@ app.use(express.json())
 app.use(cors())
 
 // Add a middleware to prepend '/api' to all routes
-app.use('/api', (req, res, next) => {
-    req.url = `/api${req.url}`;
-    next();
-  });
+// app.use('/api', (req, res, next) => {
+//     req.url = `/api${req.url}`;
+//     next();
+//   });
 
 app.use("/",IndexRoute)
 
