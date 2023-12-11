@@ -25,6 +25,13 @@ app.use(cors())
 //     next();
 //   });
 
+const corsOptions = {
+    origin: 'http://51.20.34.227 ', // Replace with your frontend domain
+    optionsSuccessStatus: 200 // Some legacy browsers (IE11) choke on 204
+  };
+  
+  app.use(cors(corsOptions));
+  
 app.use("/",IndexRoute)
 
 app.use(customErrorHandler)
