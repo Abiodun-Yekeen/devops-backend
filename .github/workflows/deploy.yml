@@ -32,8 +32,7 @@ jobs:
           docker push $IMAGE_NAME
      
           
-    
-
+  
       - name: Deploy to EC2 instances
         uses: appleboy/ssh-action@master
         with:
