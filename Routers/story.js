@@ -7,20 +7,20 @@ const { checkStoryExist, checkUserAndStoryExist } = require("../Middlewares/data
 
 const router = express.Router() ;
 
-router.post("/addstory" ,[getAccessToRoute, imageupload.single("image")],addStory)
+router.post("/api/addstory" ,[getAccessToRoute, imageupload.single("image")],addStory)
 
 
-router.post("/:slug", checkStoryExist, detailStory)
+router.post("/api/:slug", checkStoryExist, detailStory)
 
-router.post("/:slug/like",[getAccessToRoute,checkStoryExist] ,likeStory)
+router.post("/api/:slug/like",[getAccessToRoute,checkStoryExist] ,likeStory)
 
-router.get("/editStory/:slug",[getAccessToRoute,checkStoryExist,checkUserAndStoryExist] , editStoryPage)
+router.get("/api/editStory/:slug",[getAccessToRoute,checkStoryExist,checkUserAndStoryExist] , editStoryPage)
 
-router.put("/:slug/edit",[getAccessToRoute,checkStoryExist,checkUserAndStoryExist, imageupload.single("image")] ,editStory)
+router.put("/api/:slug/edit",[getAccessToRoute,checkStoryExist,checkUserAndStoryExist, imageupload.single("image")] ,editStory)
 
-router.delete("/:slug/delete",[getAccessToRoute,checkStoryExist,checkUserAndStoryExist] ,deleteStory)
+router.delete("/api/:slug/delete",[getAccessToRoute,checkStoryExist,checkUserAndStoryExist] ,deleteStory)
 
-router.get("/getAllStories",getAllStories)
+router.get("/api/getAllStories",getAllStories)
 
 
 module.exports = router
