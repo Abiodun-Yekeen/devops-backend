@@ -9,13 +9,13 @@ const { checkStoryExist } = require("../Middlewares/database/databaseErrorhandle
 const router = express.Router() ;
 
 
-router.post("/api/:slug/addComment",[getAccessToRoute,checkStoryExist] ,addNewCommentToStory)
+router.post("/:slug/addComment",[getAccessToRoute,checkStoryExist] ,addNewCommentToStory)
 
-router.get("/api/:slug/getAllComment",getAllCommentByStory)
+router.get("/:slug/getAllComment",getAllCommentByStory)
 
-router.post("/api/:comment_id/like",commentLike)
+router.post("/:comment_id/like",commentLike)
 
-router.post("/api/:comment_id/getCommentLikeStatus",getCommentLikeStatus)
+router.post("/:comment_id/getCommentLikeStatus",getCommentLikeStatus)
 
 
 module.exports = router

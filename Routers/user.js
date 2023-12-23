@@ -8,15 +8,15 @@ const { getAccessToRoute } = require("../Middlewares/Authorization/auth");
 
 const router = express.Router() ;
 
-router.get("/api/profile",getAccessToRoute ,profile)
+router.get("/profile",getAccessToRoute ,profile)
 
-router.post("/api/editProfile",[getAccessToRoute ,imageUpload.single("photo")],editProfile)
+router.post("/editProfile",[getAccessToRoute ,imageUpload.single("photo")],editProfile)
 
-router.put("/api/changePassword",getAccessToRoute,changePassword)
+router.put("/changePassword",getAccessToRoute,changePassword)
 
-router.post("/api/:slug/addStoryToReadList",getAccessToRoute ,addStoryToReadList)
+router.post("/:slug/addStoryToReadList",getAccessToRoute ,addStoryToReadList)
 
-router.get("/api/readList",getAccessToRoute ,readListPage)
+router.get("/readList",getAccessToRoute ,readListPage)
 
 
 
