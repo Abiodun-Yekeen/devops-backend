@@ -41,8 +41,8 @@ jobs:
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
-            # docker stop api || true
-            # docker rm api || true
+            docker stop api || true
+            docker rm api || true
             docker rmi -f $(docker images -q)
             docker pull ${{ secrets.DOCKER_USERNAME }}/api:${{github.run_number}}
             docker run -d --name api -p 8085:8085 ${{ secrets.DOCKER_USERNAME }}/api:${{github.run_number}}
