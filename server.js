@@ -19,18 +19,19 @@ const app = express();
 app.use(express.json())
 app.use(cors())
 
+app.use((req, res, next) => {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
+});
+
 // Add a middleware to prepend '/api' to all routes
 // app.use('/api', (req, res, next) => {
 //     req.url = `/api${req.url}`;
 //     next();
 //   });
 
-const corsOptions = {
-    origin: 'http://51.20.34.227 ', // Replace with your frontend domain
-    optionsSuccessStatus: 200 // Some legacy browsers (IE11) choke on 204
-  };
-  
-  app.use(cors(corsOptions));
+
   
 app.use("/",IndexRoute)
 
