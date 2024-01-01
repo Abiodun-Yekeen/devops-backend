@@ -7,10 +7,10 @@ const storyRoute = require("./story")
 const userRoute = require("./user")
 const commentRoute = require("./comment")
 
-router.use("/auth",authRoute)
-router.use("/story",storyRoute)
-router.use("/user",userRoute)
-router.use("/comment",commentRoute)
+router.use("/api/auth",authRoute)
+router.use("/api/story",storyRoute)
+router.use("/api/user",userRoute)
+router.use("/api/comment",commentRoute)
 
 
 module.exports = router
