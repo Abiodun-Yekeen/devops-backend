@@ -1,4 +1,4 @@
-name: Docker CI/CD Pipeline for Backend Group
+name: Docker CI/CD Pipeline for Backend 
 
 
 on:
