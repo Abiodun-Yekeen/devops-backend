@@ -1,6 +1,6 @@
 
 
-# Dockerfile for backend
+# Dockerfile for our API
 # # Use an official Node.js runtime as the base image
 FROM node:latest
 
