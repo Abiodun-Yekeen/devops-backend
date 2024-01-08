@@ -5,7 +5,6 @@ on:
   push:
     branches:
       - main
-
 jobs:
   build-and-deploy-backend:
     runs-on: self-hosted
