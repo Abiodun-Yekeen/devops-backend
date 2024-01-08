@@ -13,6 +13,7 @@
         "bcryptjs": "^2.4.3",
         "cors": "^2.8.5",
         "dotenv": "^15.0.0",
+        "e": "^0.2.33",
         "express": "^4.17.2",
         "express-async-handler": "^1.2.0",
         "jsonwebtoken": "^9.0.2",
@@ -23,6 +24,11 @@
         "nodemon": "^2.0.15",
         "path": "^0.12.7",
         "pm2": "^2.10.4",
+        "prom-client": "^15.1.0",
+        "response-time": "^2.3.2",
         "slugify": "^1.6.5"
+    },
+    "devDependencies": {
+        "@types/response-time": "^2.3.8"
     }
 }

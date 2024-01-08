@@ -1,0 +1,88 @@
+version: '3'
+
+services:
+  nodejs-app:
+    image: node:latest
+    working_dir: /app
+    ports:
+      - "8085:8085"
+    volumes:
+      - .:/app
+    command: npm start
+    depends_on:
+      - prometheus
+      - grafana
+      - node-exporter  # Added dependency on node-exporter service
+
+  prometheus:
+    image: prom/prometheus:v2.30.3
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus:/etc/prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+    networks:
+      - monitoring
+
+  grafana:
+    image: grafana/grafana:8.3.3
+    ports:
+      - "3000:3000"
+    networks:
+      - monitoring
+
+  node-exporter:
+    image: prom/node-exporter:v1.2.2
+    ports:
+      - "9100:9100"
+    networks:
+      - monitoring
+
+networks:
+  monitoring:
+    driver: bridge
+
+
+
+
+
+
+
+
+# version: '3'
+
+# services:
+#   nodejs-app:
+#     image: node:latest
+#     working_dir: /app
+#     ports:
+#       - "8085:8085"
+#     volumes:
+#       - .:/app
+#     command: npm start
+#     depends_on:
+#       - prometheus
+#       - grafana
+
+#   prometheus:
+#     image: prom/prometheus:v2.30.3
+#     ports:
+#       - "9090:9090"
+#     volumes:
+#       - ./prometheus:/etc/prometheus
+#     command:
+#       - '--config.file=/etc/prometheus/prometheus.yml'
+#     networks:
+#       - monitoring
+
+#   grafana:
+#     image: grafana/grafana:8.3.3
+#     ports:
+#       - "3000:3000"
+#     networks:
+#       - monitoring
+
+# networks:
+#   monitoring:
+#     driver: bridge

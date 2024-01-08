@@ -2,8 +2,10 @@ const express = require("express")
 const dotenv = require("dotenv")
 const cors = require("cors")
 const path = require("path")
+const promClient = require('prom-client');
 
 const IndexRoute = require("./Routers/index")
+
 const connectDatabase = require("./Helpers/database/connectDatabase")
 const customErrorHandler = require("./Middlewares/Errors/customErrorHandler")
 
@@ -12,9 +14,44 @@ dotenv.config({
     path:  '.env'
 })
 
-connectDatabase()
+
+
+
 
 const app = express();
+
+// Create a metric to track HTTP requests
+// const httpRequestDurationMicroseconds = new promClient.Histogram({
+//   name: 'http_request_duration_seconds',
+//   help: 'Duration of HTTP requests in seconds',
+//   labelNames: ['method', 'route', 'status_code'],
+//   buckets: [0.1, 0.5, 1, 1.5, 2, 3, 5, 10],
+// });
+
+// // Middleware to measure HTTP request duration
+// app.use((req, res, next) => {
+//   const end = httpRequestDurationMicroseconds.startTimer();
+//   res.on('finish', () => {
+//     end({
+//       method: req.method,
+//       route: req.route.path,
+//       status_code: res.statusCode,
+//     });
+//   });
+//   next();
+// });
+
+// // Endpoint to expose Prometheus metrics
+// app.get('/metrics', (req, res) => {
+//   res.set('Content-Type', promClient.register.contentType);
+//   res.end(promClient.register.metrics());
+// });
+
+
+
+connectDatabase()
+
+// const app = express();
 
 app.use(express.json())
 app.use(cors())
@@ -24,12 +61,6 @@ app.use((req, res, next) => {
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     next();
 });
-
-// Add a middleware to prepend '/api' to all routes
-// app.use('/api', (req, res, next) => {
-//     req.url = `/api${req.url}`;
-//     next();
-//   });
 
 
   
