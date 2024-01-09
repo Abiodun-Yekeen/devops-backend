@@ -1,4 +1,4 @@
-name: Docker CI/CD Pipeline for Backend 
+name: Docker CI/CD Pipeline for Backend (API)
 
 
 on:
@@ -31,8 +31,7 @@ jobs:
           docker build -t $IMAGE_NAME .
           docker push $IMAGE_NAME
      
-          
-  
+        
       - name: Deploy to EC2 instances
         uses: appleboy/ssh-action@master
         with:
